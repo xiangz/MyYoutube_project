@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+    <body>
+        <div>
+            <ul>
+                {% if videos %}
+                {% for video in videos %}
+                <li><a href="/myYoutube/watch/?url={{video.url}}">{{ video.name }}</a>
+                    <button id="delete" data-key="{{ video.name }}" type="button" class="myYoutube-delete" >delete</button></li>
+                {% endfor %}
+
+                {% endif %}
+            </ul>
+        </div>
+        <script src="{% static 'js/jquery-2.0.3.js' %}"></script>
+        <script src="{% static 'js/bootstrap.min.js' %}"></script>
+        <script src="{% static 'js/myYoutube-ajax.js' %}"></script>
+    </body>
+</html>

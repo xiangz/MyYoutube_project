@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+
+<script type="text/javascript" src="{% static 'js/jwplayer.js' %}"></script>
+<div id="myElement">Loading the player...</div>
+<a href="{{url}}">download</a>
+<a href="/myYoutube/">back</a>
+
+<script type="text/javascript">
+
+    var a ="{{ url }}";
+    // alert(a);
+    // var b="{{ videos }}";
+    // var myObject = JSON.parse('{{ data }}');
+    // alert(b);
+    jwplayer("myElement").setup({
+        flashplayer: "{% static 'js/jwplayer.flash.swf' %}",
+        file: a
+        // image: "videos/cute-bunny.jpg"
+    });
+</script>
+</html>

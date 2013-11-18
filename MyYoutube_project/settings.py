@@ -8,7 +8,7 @@ DATABASE_PATH = os.path.join(PROJECT_PATH, 'myYoutube.db')
 STATIC_PATH = os.path.join(PROJECT_PATH,'static')
 
 AWS_ACCESS_KEY_ID = 'AKIAIIMU2XP4Y4VXOVVA'
-AWS_SECRET_ACCESS_KEY= r'LpDzYzBBo7lM\/8u42xbOVvwTCMmwP879QYFQE33o'
+AWS_SECRET_ACCESS_KEY= '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'
 
 
 DEBUG = True
@@ -22,13 +22,13 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'mydb',                      # Or path to database file if using sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+        'NAME': DATABASE_PATH,                      # Or path to database file if using sqlite3.
         # The following settings are not used with sqlite3:
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '/Applications/MAMP/tmp/mysql/mysql.sock',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '8888',                      # Set to empty string for default.
+        'USER': '',
+        'PASSWORD': '',
+        'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+        'PORT': '',                      # Set to empty string for default.
     }
 }
 

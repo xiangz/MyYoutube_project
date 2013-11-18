@@ -1,4 +1,4 @@
-import mimetypes
+# import mimetypes
 from django.http import HttpResponseRedirect
 from django.shortcuts import render_to_response
 from django.core.urlresolvers import reverse
@@ -11,8 +11,8 @@ from myYoutube.forms import UploadFileForm
 from django.template import RequestContext
 from django.http import HttpResponse
 import boto
-from django.utils import simplejson
-from django.core import serializers
+# from django.utils import simplejson
+# from django.core import serializers
 
 
 
@@ -49,7 +49,7 @@ def store_in_s3(filename, content,context):
         print 9
         # conn = S3Connection(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
         # b = conn.create_bucket('xzz820')
-        s3 = boto.connect_s3()
+        s3 = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
         bucket = s3.get_bucket('xz820')
         k = Key(bucket)
         # mime = mimetypes.guess_type(filename)[0]
@@ -67,7 +67,7 @@ def deleteVideo(request):
         # print 2
         if key:
             print key
-            s3 = boto.connect_s3()
+            s3 = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
             bucket = s3.get_bucket('xz820')
             k = Key(bucket)
             k.key=key

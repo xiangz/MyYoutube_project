@@ -11,6 +11,7 @@ from myYoutube.forms import UploadFileForm
 from django.template import RequestContext
 from django.http import HttpResponse
 import boto
+
 # from django.utils import simplejson
 # from django.core import serializers
 
@@ -83,6 +84,9 @@ def deleteVideo(request):
 def watch(request):
     context = RequestContext(request)
     context_dict={}
+    if request.method=='POST':
+        a = request.FILES['fruit']
+        print a
     if request.method=='GET':
         if 'url' in request.GET:
             url=request.GET['url']

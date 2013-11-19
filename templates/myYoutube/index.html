@@ -5,11 +5,13 @@
     <body>
         <title>My Youtube</title>
         <h1>My Youtube</h1>
+        <p>{{models.score}}</p>
         <div id="vedios">
             <ul>
                 {% if videos %}
                 {% for video in videos %}
                 <li><a href="/myYoutube/watch/?url={{video.url}}">{{ video.name }}</a>
+
                     <button id="delete" data-key="{{ video.name }}" type="button" class="myYoutube-delete" >delete</button></li>
                 {% endfor %}
 

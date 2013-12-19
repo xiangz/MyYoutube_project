@@ -28,12 +28,13 @@ from django.conf import urls
 def one_time():
     print 'hello word!'
     try:
-        bucket = s3.create_bucket('youtube0498146')
+        s3 = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+        bucket = s3.create_bucket('xz820')
     except boto.exception.S3CreateError,e:
         print e.message
 
     c = boto.connect_cloudfront()
-    origin = boto.cloudfront.origin.S3Origin('youtube0498146.s3.amazonaws.com')
+    origin = boto.cloudfront.origin.S3Origin('xz820.s3.amazonaws.com')
     distro = c.create_distribution(origin=origin, enabled=True, comment='My new Distribution')
 
     strdistro = c.create_streaming_distribution(origin=origin, enabled=True, comment='My new streaming Distribution')

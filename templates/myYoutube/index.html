@@ -1,36 +1,57 @@
-<!DOCTYPE html>
-{% load static %}
-<html>
+{% extends 'myYoutube/base.html' %}
+{% block body_block %}
+{% load ratings_tags %}
 
-    <body>
-        <title>My Youtube</title>
-        <h1>My Youtube</h1>
-        <p>{{models.score}}</p>
-        <div id="vedios">
+
+
+        <div class="hero-unit" id="vedios">
             <ul>
                 {% if videos %}
                 {% for video in videos %}
-                <li><a href="/myYoutube/watch/?url={{video.url}}">{{ video.name }}</a>
 
-                    <button id="delete" data-key="{{ video.name }}" type="button" class="myYoutube-delete" >delete</button></li>
+                <li><form action="{% url 'ratings_vote' %}" method="post" >
+                    <a href="/myYoutube/watch/?url={{video.url}}">{{ video.name }}</a><br>
+                    {% get_rating_score for video as score %}
+                    {% if score %}
+                        Average score: {{ score.average|floatformat }}
+                        Number of votes: {{ score.num_votes }}
+                    {% else %}
+                        How sad: nobody voted
+                    {% endif %}
+
+
+                    {% get_rating_form for video as rating_form %}
+
+                    {% if user.is_authenticated %}
+                    vote:
+                    {% csrf_token %}
+                    {{ rating_form }}
+
+                    <input type="submit" class ="btn " value="Vote">
+
+                      &nbsp;&nbsp;&nbsp;<button id="delete" data-key="{{ video.name }}" type="button" class="myYoutube-delete btn-primary" >delete</button>
+                    {% endif %}
+
+                    </form>
+
+
+                </li>
                 {% endfor %}
 
                 {% endif %}
             </ul>
-        </div>
-        <div >
+
             <strong>{{form.file.label}} </strong>
+            {% if message %}
+            <strong>{{ message}}</strong>
+            {% endif %}
             <form  action ="." enctype="multipart/form-data" method="POST">
                 {% csrf_token %}
 
 
 
                 {{form.file}}<br/>
-                <input type="submit" value="Upload"  />
+                <input type="submit" value="Upload" class="btn-primary" />
             </form>
         </div>
-        <script src="{% static 'js/jquery-2.0.3.js' %}"></script>
-        <script src="{% static 'js/bootstrap.min.js' %}"></script>
-        <script src="{% static 'js/myYoutube-ajax.js' %}"></script>
-    </body>
-</html>
+{% endblock %}

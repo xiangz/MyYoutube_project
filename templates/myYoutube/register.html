@@ -1,0 +1,28 @@
+{% extends 'myYoutube/base.html' %}
+{% block body_block %}
+   <div class="hero-unit">
+        <h1>Rigister with MyYoutube</h1>
+        {% if registered %}
+        Rango says:<strong>thank you for registering</strong>
+        <a href="/myYoutube/">Return to the homepage.</a><br />
+        {% else %}
+        <strong>register here!</strong><br />
+
+        <form  class="form-signin " id="user_form" method="post" action="/myYoutube/register/"
+                enctype="multipart/form-data">
+
+            {% csrf_token %}
+
+            <!-- Display each form. The as.p method wraps each element in a paragraph
+                 (<p>) element. This ensures each element appears on a new line,
+                 making everything look neater. -->
+            {{ user_form.as_p }}
+            {{ profile_form.as_p }}
+
+            <!-- Provide a button to click to submit the form. -->
+            <input class="btn btn-primary" type="submit" name="submit" value="Register" />
+        </form>
+        {% endif %}
+
+    </div>
+{% endblock %}

@@ -7,7 +7,9 @@
                 {% if videos %}
                 {% for video in videos %}
                 <li><a href="/myYoutube/watch/?url={{video.url}}">{{ video.name }}</a>
-                    <button id="delete" data-key="{{ video.name }}" type="button" class="myYoutube-delete" >delete</button></li>
+                    {% if user.is_authenticated %}
+                    &nbsp;&nbsp;&nbsp;<button id="delete" data-key="{{ video.name }}" type="button" class="myYoutube-delete" >delete</button></li>
+                    {% endif %}
                 {% endfor %}
 
                 {% endif %}

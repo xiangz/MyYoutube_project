@@ -1,0 +1,16 @@
+{% extends 'myYoutube/base.html' %}
+{% block body_block %}
+    <div class="hero-unit">
+        <h1>Login to MyYoutube</h1>
+        <br>
+        <form class="form-signin " id="login_form" method="post" action="/myYoutube/login/">
+            {% csrf_token %}
+            Username: <input type="text" name="username" value="" size="50" />
+            <br />
+            Password: <input type="password" name="password" value="" size="50" />
+            <br />
+
+            <input  class="btn btn-primary" type="submit" value="submit" />
+        </form>
+    </div>
+{% endblock %}

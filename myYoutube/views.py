@@ -27,13 +27,29 @@ from django.conf import urls
 
 def one_time():
     print 'hello word!'
+    try:
+        bucket = s3.create_bucket('youtube0498146')
+    except boto.exception.S3CreateError,e:
+        print e.message
+
+    c = boto.connect_cloudfront()
+    origin = boto.cloudfront.origin.S3Origin('youtube0498146.s3.amazonaws.com')
+    distro = c.create_distribution(origin=origin, enabled=True, comment='My new Distribution')
+
+    strdistro = c.create_streaming_distribution(origin=origin, enabled=True, comment='My new streaming Distribution')
+    print distro.domain_name
+    print strdistro.domain_name
 #     c = boto.connect_cloudfront(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
 #     origin = boto.cloudfront.origin.S3Origin('xz820.s3.amazonaws.com')
 #     distro = c.create_distribution(origin=origin, enabled=False, comment='My new Distribution')
-    settings.web_url ="http://dniq4izi0hlk0.cloudfront.net/"
+    settings.web_url ="http://"+distro.domain_name+"/"
     print settings.web_url
-    settings.rmtp_url="rtmp://swin77cy85iad.cloudfront.net/cfx/st/"
+    settings.rmtp_url="rtmp://"+strdistro.domain_name+"/cfx/st/"
     print settings.rmtp_url
+    # settings.web_url ="http://dniq4izi0hlk0.cloudfront.net/"
+    # print settings.web_url
+    # settings.rmtp_url="rtmp://swin77cy85iad.cloudfront.net/cfx/st/"
+    # print settings.rmtp_url
 
 
 

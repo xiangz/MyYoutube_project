@@ -29,12 +29,12 @@ def one_time():
     print 'hello word!'
     try:
         s3 = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
-        bucket = s3.create_bucket('xz820')
+        bucket = s3.create_bucket('xz820s')
     except boto.exception.S3CreateError,e:
         print e.message
 
     c = boto.connect_cloudfront()
-    origin = boto.cloudfront.origin.S3Origin('xz820.s3.amazonaws.com')
+    origin = boto.cloudfront.origin.S3Origin('xz820s.s3.amazonaws.com')
     distro = c.create_distribution(origin=origin, enabled=True, comment='My new Distribution')
 
     strdistro = c.create_streaming_distribution(origin=origin, enabled=True, comment='My new streaming Distribution')
@@ -98,7 +98,7 @@ def index(request):
 
 def store_in_s3(filename, content,context):
         s3 = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
-        bucket = s3.get_bucket('xz820')
+        bucket = s3.get_bucket('xz820s')
         k = Key(bucket)
         k.key = filename
         k.set_contents_from_string(content)
@@ -116,7 +116,7 @@ def deleteVideo(request):
         if key:
             print key
             s3 = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
-            bucket = s3.get_bucket('xz820')
+            bucket = s3.get_bucket('xz820s')
             k = Key(bucket)
             k.key=key
             k.delete()

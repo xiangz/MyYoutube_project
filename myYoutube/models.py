@@ -9,6 +9,7 @@ from ratings.forms import SliderVoteForm
 class VideoUrl(models.Model):
     name = models.CharField(max_length=128,unique=True)
     url = models.CharField(max_length=128)
+    stream_url = models.CharField(max_length=128)
     uploaded = models.DateTimeField()
     score = models.IntegerField(default=0)
 

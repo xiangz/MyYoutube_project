@@ -7,6 +7,11 @@ TEMPLATE_CONTEXT_PROCESSORS += (
 )
 
 V ="123"
+<<<<<<< HEAD
+=======
+web_url=""
+rmtp_url=""
+>>>>>>> 144b5998aeec8aa0290c344e0feedad66029b126
 
 PROJECT_PATH=os.getcwd()
 TEMPLATE_PATH=os.path.join(PROJECT_PATH,'templates')

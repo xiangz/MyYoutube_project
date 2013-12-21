@@ -27,6 +27,7 @@ from django.conf import urls
 
 def one_time():
     print 'hello word!'
+<<<<<<< HEAD
 #     c = boto.connect_cloudfront(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
 #     origin = boto.cloudfront.origin.S3Origin('xz820.s3.amazonaws.com')
 #     distro = c.create_distribution(origin=origin, enabled=False, comment='My new Distribution')
@@ -38,6 +39,38 @@ def one_time():
 def index(request):
     # print urls.W
     print settings.V
+=======
+    try:
+        s3 = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+        bucket = s3.create_bucket('xz820s')
+    except boto.exception.S3CreateError,e:
+        print e.message
+
+    c = boto.connect_cloudfront()
+    origin = boto.cloudfront.origin.S3Origin('xz820s.s3.amazonaws.com')
+    distro = c.create_distribution(origin=origin, enabled=True, comment='My new Distribution')
+
+    strdistro = c.create_streaming_distribution(origin=origin, enabled=True, comment='My new streaming Distribution')
+    print distro.domain_name
+    print strdistro.domain_name
+#     c = boto.connect_cloudfront(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
+#     origin = boto.cloudfront.origin.S3Origin('xz820.s3.amazonaws.com')
+#     distro = c.create_distribution(origin=origin, enabled=False, comment='My new Distribution')
+    settings.web_url ="http://"+distro.domain_name+"/"
+    print settings.web_url
+    settings.rmtp_url="rtmp://"+strdistro.domain_name+"/cfx/st/"
+    print settings.rmtp_url
+    # settings.web_url ="http://dniq4izi0hlk0.cloudfront.net/"
+    # print settings.web_url
+    # settings.rmtp_url="rtmp://swin77cy85iad.cloudfront.net/cfx/st/"
+    # print settings.rmtp_url
+
+
+
+
+def index(request):
+    # print urls.W
+>>>>>>> 144b5998aeec8aa0290c344e0feedad66029b126
     # print settings.AWS_ACCESS_KEY_I
     context = RequestContext(request)
     videos = VideoUrl.objects.all().order_by("-score")
@@ -61,7 +94,14 @@ def index(request):
 
 
 
+<<<<<<< HEAD
     v = VideoUrl(name= filename,url="http://xz820.s3.amazonaws.com/" + filename)
+=======
+    # v = VideoUrl(name= filename,url="http://dniq4izi0hlk0.cloudfront.net/" + filename,stream_url="rtmp://swin77cy85iad.cloudfront.net/cfx/st/"+filename)
+    v = VideoUrl(name= filename,url=settings.web_url+ filename,stream_url=settings.rmtp_url+filename)
+
+
+>>>>>>> 144b5998aeec8aa0290c344e0feedad66029b126
     # v = VideoUrl(name= filename,url=settings.V + filename)
 
     v.save()
@@ -76,7 +116,7 @@ def index(request):
 
 def store_in_s3(filename, content,context):
         s3 = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
-        bucket = s3.get_bucket('xz820')
+        bucket = s3.get_bucket('xz820s')
         k = Key(bucket)
         k.key = filename
         k.set_contents_from_string(content)
@@ -94,7 +134,7 @@ def deleteVideo(request):
         if key:
             print key
             s3 = boto.connect_s3(settings.AWS_ACCESS_KEY_ID, settings.AWS_SECRET_ACCESS_KEY)
-            bucket = s3.get_bucket('xz820')
+            bucket = s3.get_bucket('xz820s')
             k = Key(bucket)
             k.key=key
             k.delete()
@@ -116,6 +156,9 @@ def watch(request):
         if 'url' in request.GET:
             url=request.GET['url']
             context_dict['url']=url
+            cur = VideoUrl.objects.get(url=url)
+            # print cur.stream_url
+            context_dict['stream_url']=cur.stream_url
 
     return render_to_response('myYoutube/watch.html',context_dict,context)
 

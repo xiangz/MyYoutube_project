@@ -1,4 +1,13 @@
 import os
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+
+
+TEMPLATE_CONTEXT_PROCESSORS += (
+     'django.core.context_processors.request',
+)
+
+V ="123"
+
 PROJECT_PATH=os.getcwd()
 TEMPLATE_PATH=os.path.join(PROJECT_PATH,'templates')
 
@@ -7,8 +16,8 @@ DATABASE_PATH = os.path.join(PROJECT_PATH, 'myYoutube.db')
 
 STATIC_PATH = os.path.join(PROJECT_PATH,'static')
 
-AWS_ACCESS_KEY_ID = ''
-AWS_SECRET_ACCESS_KEY= ''
+AWS_ACCESS_KEY_ID = 'AKIAIIMU2XP4Y4VXOVVA'
+AWS_SECRET_ACCESS_KEY= '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'
 
 
 DEBUG = True
@@ -22,14 +31,23 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': 'mydb',                      # Or path to database file if using sqlite3.
-        # The following settings are not used with sqlite3:
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': '/Applications/MAMP/tmp/mysql/mysql.sock',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
-        'PORT': '8888',                      # Set to empty string for default.
-    }
+            'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+            'NAME': DATABASE_PATH,                      # Or path to database file if using sqlite3.
+            # The following settings are not used with sqlite3:
+            'USER': '',
+            'PASSWORD': '',
+            'HOST': '',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+            'PORT': '',                      # Set to empty string for default.
+        }
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql', # Add 'postgresql_psycopg2', 'mysql', 'sqlite3' or 'oracle'.
+    #     'NAME': 'mydb',                      # Or path to database file if using sqlite3.
+    #     # The following settings are not used with sqlite3:
+    #     'USER': 'root',
+    #     'PASSWORD': 'root',
+    #     'HOST': '/Applications/MAMP/tmp/mysql/mysql.sock',                      # Empty for localhost through domain sockets or '127.0.0.1' for localhost through TCP.
+    #     'PORT': '8888',                      # Set to empty string for default.
+    # }
 }
 
 # Hosts/domain names that are valid for this site; required if DEBUG is False
@@ -137,6 +155,8 @@ INSTALLED_APPS = (
     'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
     # 'django.contrib.admindocs',
+    # 'djangoratings',
+    'ratings',
     'myYoutube',
 )
 

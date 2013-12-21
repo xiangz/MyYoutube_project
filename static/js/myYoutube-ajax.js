@@ -3,7 +3,6 @@ $(document).ready(function(){
 
 
 
-
     $('.myYoutube-delete').click(function(){
 
 
